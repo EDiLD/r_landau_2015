@@ -35,26 +35,21 @@ install.packages(c("vegan"),
 
 ### Downloading code and data
 
-1. [Click here](https://github.com/EDiLD/sefs9_Rworkshop/archive/master.zip) to download all the material.
+1. [Click here](https://github.com/EDiLD/r_landau_2015/archive/master.zip) to download all the material.
 2. Unzip the file - The unzipped folder contains all files and folders of this on-line repository.
 
 
 ## Structure of the Course
 
-The course is structured into four parts of roughly 1.5 hours:
-
-* [Linear and Generalized Linear Models (Ralf B. Schäfer)](https://github.com/EDiLD/sefs9_Rworkshop/tree/master/1-LinearModels) (**9.00 - 11.00**)
-* [Ordinations (Eduard Szöcs)](https://github.com/EDiLD/sefs9_Rworkshop/tree/master/2-Ordination) (**11.15 - 12.15 and 13.15 - 14.45**)
-* [Spatial autocorrelation in linear models (Avit Kumar Bhowmik)](https://github.com/EDiLD/sefs9_Rworkshop/tree/master/3-SpatialModels) (**15.00 - 16.45**)
-* [Course Evaluation](https://docs.google.com/forms/d/1wYkbajB_q5NPxzqJfS4gAwrRro7BcOd4OE_W5tmiOYo/viewform?usp=send_form) (**16.45 - 17.00**) - see link below.
-
 Each part has its own folder, with slides, data, code and other materials.
-Each lecture is structured in: Intro - Demo - Exercise
+Each lecture is structured in: **Intro** - **Demo** - **Exercise**.
 
 
 ## Feedback
 
-Please rate our course by filling [this questionnaire](https://docs.google.com/forms/d/1wYkbajB_q5NPxzqJfS4gAwrRro7BcOd4OE_W5tmiOYo/viewform?usp=send_form). It is anonymous and will be only used to improve the course.
+Please rate this course by filling [this questionnaire](https://docs.google.com/forms/d/1wYkbajB_q5NPxzqJfS4gAwrRro7BcOd4OE_W5tmiOYo/viewform?usp=send_form).
+
+It is anonymous and will be only used to improve the course.
 
 
 ## License  
