@@ -47,7 +47,7 @@ Each lecture is structured in: **Intro** - **Demo** - **Exercise**.
 
 ## Feedback
 
-Please rate this course by filling [this questionnaire](https://docs.google.com/forms/d/1wYkbajB_q5NPxzqJfS4gAwrRro7BcOd4OE_W5tmiOYo/viewform?usp=send_form).
+Please rate this course by filling [this questionnaire](http://goo.gl/forms/8x2m4TB9NM).
 
 It is anonymous and will be only used to improve the course.
 
