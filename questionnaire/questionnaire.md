@@ -1,7 +1,10 @@
-Results from questionnaire
---------------------------
+Results from the questionnaire
+==============================
 
-### Load the data
+This is just a Quick and Dirty analysis...
+
+Load the data
+-------------
 
 ``` r
 prj <- '/home/edisz/Documents/Uni/Projects/PHD/CONFERENCES/AufLand'
@@ -24,20 +27,22 @@ df <- read.csv(file.path(prj, 'questionnaire/questionnaire.csv'),
     ##  $ Rank.the.five.most.interesting.topics....5..least.interesting..                          : chr  "Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)" "Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)" "Reproducible and Open Science using R and git" "Introduction to R programming (data types & structures, writing functions, repetitive tasks, no statistics)" ...
     ##  $ Do.you.have.any.other.topic.suggestions.                                                 : chr  "" "" "" "" ...
     ##  $ Do.you.have.the.necessary.R.and.theoritcal.background.for.the.topic.you.re.interested.in.: chr  "Maybe (I am unsure about my theory knowledge, but R is good)" "Maybe (I am unsure about my theory knowledge, but R is good)" "Maybe (I am unsure about my theory knowledge, but R is good)" "Definitively (I know the R basics and the theory)" ...
-    ##  $ Name                                                                                     : chr  "Steffi" "Anna Kästel" "Friedrich Viedt " "Bonny" ...
-    ##  $ Email                                                                                    : chr  "allgeier@uni-landau.de" "Kaestel@uni-landau.de" "vied2934@uni-landau.de" "krell@uni-landau.de" ...
+    ##  $ Name                                                                                     : chr  "Steffi" "Anna" "Friedrich" "Bonny" ...
+    ##  $ Email                                                                                    : chr  "@uni-landau.de" "@uni-landau.de" "@uni-landau.de" "@uni-landau.de" ...
     ##  $ Affiliation                                                                              : chr  "Uni Landau" "Uni Landau" "Universität Koblenz-Landau " "University Koblenz Landau" ...
     ##  $ Position                                                                                 : chr  "PhD" "PhD student" "" "PhD" ...
     ##  $ I.will.bring.my.own.laptop                                                               : chr  "yes" "yes" "no" "yes" ...
 
 Looks OK, but quite long column names....
 
-### Clean the data
+Clean the data
+--------------
 
 ``` r
 # shorten the colnames
 colnames(df) <- c('date', 'theory', 'prog', 'rknow', 'curr', 'inter', 'one', 
-                  'two', 'three', 'four', 'five', 'sugg', 'backg', 'name', 'email', 'affl', 'pos', 'laptop')
+                  'two', 'three', 'four', 'five', 'sugg', 'backg', 'name',
+                  'email', 'affl', 'pos', 'laptop')
 str(df)
 ```
 
@@ -55,8 +60,8 @@ str(df)
     ##  $ five  : chr  "Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)" "Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)" "Reproducible and Open Science using R and git" "Introduction to R programming (data types & structures, writing functions, repetitive tasks, no statistics)" ...
     ##  $ sugg  : chr  "" "" "" "" ...
     ##  $ backg : chr  "Maybe (I am unsure about my theory knowledge, but R is good)" "Maybe (I am unsure about my theory knowledge, but R is good)" "Maybe (I am unsure about my theory knowledge, but R is good)" "Definitively (I know the R basics and the theory)" ...
-    ##  $ name  : chr  "Steffi" "Anna Kästel" "Friedrich Viedt " "Bonny" ...
-    ##  $ email : chr  "allgeier@uni-landau.de" "Kaestel@uni-landau.de" "vied2934@uni-landau.de" "krell@uni-landau.de" ...
+    ##  $ name  : chr  "Steffi" "Anna" "Friedrich" "Bonny" ...
+    ##  $ email : chr  "@uni-landau.de" "@uni-landau.de" "@uni-landau.de" "@uni-landau.de" ...
     ##  $ affl  : chr  "Uni Landau" "Uni Landau" "Universität Koblenz-Landau " "University Koblenz Landau" ...
     ##  $ pos   : chr  "PhD" "PhD student" "" "PhD" ...
     ##  $ laptop: chr  "yes" "yes" "no" "yes" ...
@@ -92,9 +97,10 @@ I a last step we combine both using the logical `OR` and save as new variable:
 df$fromlandau <- grepl(pattern = 'landau', df$email) | grepl(pattern = 'landau', tolower(df$affl))
 ```
 
-### Plot the data
+Plot the data
+-------------
 
-#### How many attendies replied?
+### How many attendies replied and where are they from?
 
 We have only 11 repsonses:
 
@@ -116,17 +122,7 @@ are from Landau.
 
 ``` r
 require(ggplot2)
-```
-
-    ## Loading required package: ggplot2
-
-``` r
 require(RColorBrewer)
-```
-
-    ## Loading required package: RColorBrewer
-
-``` r
 classPalette = colorRampPalette(brewer.pal(5, "Dark2"))
 ```
 
@@ -139,3 +135,72 @@ ggplot(df, aes(x = factor(1), fill = df$fromlandau)) +
 ```
 
 ![](questionnaire_files/figure-markdown_github/plot_fromlandau-1.png)
+
+### What room do we need?
+
+Note that we need a computer room, as two attendees won't bring their laptop. Or we provide laptops?!
+
+``` r
+nlev <- length(unique(df$laptop))
+ggplot(df, aes(x = factor(1), fill = df$laptop)) +
+  geom_bar() +
+  scale_fill_manual(values = classPalette(nlev)) +
+  guides(fill= guide_legend(reverse=TRUE, title = 'bring laptop?'))
+```
+
+![](questionnaire_files/figure-markdown_github/plot_laptop-1.png)
+
+``` r
+sum(df$laptop == 'no') / nrow(df) * 100
+```
+
+    ## [1] 18.18182
+
+### What's the backgound knowledge?
+
+``` r
+nlev <- length(unique(df$prog))
+ggplot(df, aes(x = factor(1), fill = prog)) +
+  geom_bar() +
+  scale_fill_manual(values = classPalette(nlev)) +
+  ggtitle('Programming')
+```
+
+![](questionnaire_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+``` r
+nlev <- length(unique(df$theory))
+ggplot(df, aes(x = factor(1), fill = abbreviate(theory))) +
+  geom_bar() +
+  scale_fill_manual(values = classPalette(nlev)) +
+  ggtitle('Theory')
+```
+
+![](questionnaire_files/figure-markdown_github/unnamed-chunk-10-1.png)
+
+``` r
+nlev <- length(unique(df$rknow))
+ggplot(df, aes(x = factor(1), fill = abbreviate(rknow))) +
+  geom_bar() +
+  ggtitle('R knowledge') +
+  facet_wrap(~fromlandau)
+```
+
+![](questionnaire_files/figure-markdown_github/unnamed-chunk-11-1.png)
+
+``` r
+nlev <- length(unique(df$curr))
+ggplot(df, aes(x = factor(1), fill = abbreviate(curr))) +
+  geom_bar() +
+  scale_fill_manual(values = classPalette(nlev)) +
+  ggtitle('Software usage') +
+  facet_wrap(~fromlandau)
+```
+
+![](questionnaire_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
+-   Generally wide spread R knowledge and usage!
+-   One attendee without any R knowledge (T.S. from Landau) (Check if its fine if we don't start with the very basics?!)
+-   From outside: One who's not using R (!), others are beginners or intermediate.
+
+### What is needed?

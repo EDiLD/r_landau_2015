@@ -3,13 +3,11 @@ title: "Questionnaire results"
 author: "Eduard Szöcs"
 date: "November 2, 2015"
 output: 
-    pdf_document:
-      fig_width: 4
-      fig_height: 3
-#   md_document:
-#     variant: markdown_github
+#     pdf_document:
 #       fig_width: 4
 #       fig_height: 3
+  md_document:
+    variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
@@ -157,5 +155,10 @@ ggplot(df, aes(x = factor(1), fill = abbreviate(curr))) +
 ```
 
 
+* Generally wide spread R knowledge and usage!
+* One attendee without any R knowledge (T.S. from Landau) (Check if its fine if we don't start with the very basics?!)
+* From outside: One who's not using R (!), others are beginners or intermediate.
 
+
+### What is needed?
 
