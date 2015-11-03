@@ -5,7 +5,7 @@ This is the GitHub repository for the R workshop held at the Young Academics Con
 
 * Date:   Thursday, **November 26th 2015**
 * Time: **13.30 - 18.00** 
-* Location: **tbA**
+* Location: **University of Koblenz-Landau**
 
 
 
@@ -19,7 +19,7 @@ This is the GitHub repository for the R workshop held at the Young Academics Con
 ### Install R
 
 If you don't already have set up R on your laptop, please download and install it from [here](http://cran.rstudio.com/). 
-You can use the code editor of your choice. However, we recommend using [RStudio Desktop](http://www.rstudio.com/products/rstudio/download/).
+You can use the code editor of your choice. However, I recommend using [RStudio Desktop](http://www.rstudio.com/products/rstudio/download/).
 
 
 ### Installing packages
