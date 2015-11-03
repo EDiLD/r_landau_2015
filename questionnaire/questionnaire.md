@@ -204,3 +204,158 @@ ggplot(df, aes(x = factor(1), fill = abbreviate(curr))) +
 -   From outside: One who's not using R (!), others are beginners or intermediate.
 
 ### What is needed?
+
+``` r
+nlev <- length(unique(df$inter))
+ggplot(df, aes(x = factor(1), fill = abbreviate(inter))) +
+  geom_bar() +
+  scale_fill_manual(values = classPalette(nlev)) +
+  ggtitle('Software usage') +
+  facet_wrap(~fromlandau)
+```
+
+![](questionnaire_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+``` r
+table(df$inter)
+```
+
+    ## 
+    ##                         Creating publication ready plots with ggplot2 (An introduction to the ggplot2 package) 
+    ##                                                                                                              3 
+    ##   Generlized linear models (GLMs) with R (from basic regression, to count/binomial data, to model checking...) 
+    ##                                                                                                              2 
+    ## Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics) 
+    ##                                                                                                              2 
+    ##                                                                Multivariate Statistics using the vegan package 
+    ##                                                                                                              3 
+    ##                                                              R package development (How to write an R package) 
+    ##                                                                                                              1
+
+``` r
+with(df, table(inter, fromlandau))
+```
+
+    ##                                                                                                                 fromlandau
+    ## inter                                                                                                            FALSE
+    ##   Creating publication ready plots with ggplot2 (An introduction to the ggplot2 package)                             2
+    ##   Generlized linear models (GLMs) with R (from basic regression, to count/binomial data, to model checking...)       0
+    ##   Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)     0
+    ##   Multivariate Statistics using the vegan package                                                                    1
+    ##   R package development (How to write an R package)                                                                  0
+    ##                                                                                                                 fromlandau
+    ## inter                                                                                                            TRUE
+    ##   Creating publication ready plots with ggplot2 (An introduction to the ggplot2 package)                            1
+    ##   Generlized linear models (GLMs) with R (from basic regression, to count/binomial data, to model checking...)      2
+    ##   Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)    2
+    ##   Multivariate Statistics using the vegan package                                                                   2
+    ##   R package development (How to write an R package)                                                                 1
+
+-   Outside:
+-   ggplot2 + multivar
+-   Inside:
+-   Intro, Multivar + GLM
+-   General:
+-   ggplot2 + multivar
+
+``` r
+out <- df[df$fromlandau == FALSE, ]
+ll <- list(data.frame(table(out$one) * 5),
+           data.frame(table(out$two) * 4),
+           data.frame(table(out$three) * 3),
+           data.frame(table(out$four) * 2),
+           data.frame(table(out$five) * 1))
+require(data.table)
+```
+
+    ## Loading required package: data.table
+
+``` r
+ll <- rbindlist(ll)
+aggregate(Freq ~ Var1, data = ll, FUN = sum)
+```
+
+    ##                                                                                                             Var1
+    ## 1                         Creating publication ready plots with ggplot2 (An introduction to the ggplot2 package)
+    ## 2                                                                Multivariate Statistics using the vegan package
+    ## 3   Generlized linear models (GLMs) with R (from basic regression, to count/binomial data, to model checking...)
+    ## 4 Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)
+    ## 5                Web scraping for environmental sciences (how can I download and prepare data from the internet)
+    ## 6    Introduction to R programming (data types & structures, writing functions, repetitive tasks, no statistics)
+    ## 7                                                                  Reproducible and Open Science using R and git
+    ## 8                                                              R package development (How to write an R package)
+    ##   Freq
+    ## 1   12
+    ## 2    9
+    ## 3   10
+    ## 4    4
+    ## 5    4
+    ## 6    4
+    ## 7    1
+    ## 8    1
+
+outside attendees are interested in ggplot2 and glms.
+
+``` r
+out <- df[df$fromlandau == TRUE, ]
+ll <- list(data.frame(table(out$one) * 5),
+           data.frame(table(out$two) * 4),
+           data.frame(table(out$three) * 3),
+           data.frame(table(out$four) * 2),
+           data.frame(table(out$five) * 1))
+require(data.table)
+ll <- rbindlist(ll)
+aggregate(Freq ~ Var1, data = ll, FUN = sum)
+```
+
+    ##                                                                                                             Var1
+    ## 1                         Creating publication ready plots with ggplot2 (An introduction to the ggplot2 package)
+    ## 2   Generlized linear models (GLMs) with R (from basic regression, to count/binomial data, to model checking...)
+    ## 3 Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)
+    ## 4                                                                Multivariate Statistics using the vegan package
+    ## 5                                                              R package development (How to write an R package)
+    ## 6    Introduction to R programming (data types & structures, writing functions, repetitive tasks, no statistics)
+    ## 7                                                                  Reproducible and Open Science using R and git
+    ##   Freq
+    ## 1   30
+    ## 2   25
+    ## 3   17
+    ## 4   26
+    ## 5    6
+    ## 6   14
+    ## 7    2
+
+Inside students in ggplot2, glms and multivar.
+
+``` r
+out <- df
+ll <- list(data.frame(table(out$one) * 5),
+           data.frame(table(out$two) * 4),
+           data.frame(table(out$three) * 3),
+           data.frame(table(out$four) * 2),
+           data.frame(table(out$five) * 1))
+require(data.table)
+ll <- rbindlist(ll)
+aggregate(Freq ~ Var1, data = ll, FUN = sum)
+```
+
+    ##                                                                                                             Var1
+    ## 1                         Creating publication ready plots with ggplot2 (An introduction to the ggplot2 package)
+    ## 2   Generlized linear models (GLMs) with R (from basic regression, to count/binomial data, to model checking...)
+    ## 3 Introduction to R for ecologists (Basic R, How to read data, clean and aggregate, plot data, basic statistics)
+    ## 4                                                                Multivariate Statistics using the vegan package
+    ## 5                                                              R package development (How to write an R package)
+    ## 6    Introduction to R programming (data types & structures, writing functions, repetitive tasks, no statistics)
+    ## 7                Web scraping for environmental sciences (how can I download and prepare data from the internet)
+    ## 8                                                                  Reproducible and Open Science using R and git
+    ##   Freq
+    ## 1   42
+    ## 2   35
+    ## 3   21
+    ## 4   35
+    ## 5    7
+    ## 6   18
+    ## 7    4
+    ## 8    3
+
+Combinde: ggplot2, glms + multivar.
