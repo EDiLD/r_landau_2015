@@ -1,0 +1,287 @@
+\documentclass[9pt, compress]{beamer}
+\usetheme[progressbar=frametitle,
+numbering=fraction,
+everytitleformat=regular]{m}
+
+\usepackage{color}
+\usepackage{adjustbox}
+\usepackage{fontawesome}
+\usepackage{graphicx}
+
+
+\hypersetup{bookmarksopen=true,bookmarksopenlevel=4}
+\setcounter{tocdepth}{4}
+
+\definecolor{mygreen}{rgb}{0.07, 0.53, 0.03}
+\definecolor{myorange}{rgb}{1.0, 0.31, 0.0}
+\definecolor{darkred}{rgb}{0.55, 0.0, 0.0}
+     
+
+\title{R Course, \\ AufLand Conference}
+\date{26. November 2015}
+\author{Eduard Szöcs}
+\institute{Institute for Environmental Sciences - University of Koblenz-Landau \\[1em] \includegraphics[width=2.5cm]{fig/Institut.png}}
+
+
+
+%%% -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\begin{document}
+<<setup, echo=FALSE>>=
+require(knitr)
+knit_theme$set("edit-kwrite")
+opts_chunk$set(size="footnotesize",
+               fig.align='center')
+@
+%%% -------------------------------------------------------------------------------------------
+\maketitle
+
+
+%%% -------------------------------------------------------------------------------------------
+\section{Intro}
+
+
+\begin{frame}
+\frametitle{Short Intro: Eduard Szöcs}
+\begin{itemize}
+\item PhD student @Quantitative Landscape Ecology
+\item Environmental Sciences \& Ecotoxicology
+\item Research:
+  \begin{itemize}
+  \item Statistical Ecology - Eco(toxico)logical Statistics
+  \item Effects and distribution of pesticides in freshwaters
+  \end{itemize}
+\item R-Programming:
+  \begin{itemize}
+    \item R-user for 6years
+    \item Author/Co-Author of 3 CRAN packages (taxize, webchem, rspear)
+    \item Other packages on github (restax, esmisc)
+    \item Minor contribitions to other pkgs (e.g. vegan)
+  \end{itemize}
+\end{itemize}
+\url{edild.github.io} \hfill \faTwitter @EduardSzoecs
+\end{frame}
+
+\begin{frame}
+\frametitle{Short Intro: Gunnar Oehmichen}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Course Outline}
+\begin{itemize}
+  \item Short intro \& course organisation, Software preparation
+  \item An introduction to ggplot2
+  \item Visualization \& Exploration of models in R
+\end{itemize}
+
+Course material: \url{https://github.com/EDiLD/r_landau_2015}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Preliminaries}
+\begin{itemize}
+  \item Download the course repository
+  \item No formal R knowledge required to follow.
+  \item Just open the `.R` files in RStudio and execute the script line by line: `CTRL + ENTER`
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Datasets}
+We will use 2 data sets in this course:
+\begin{enumerate}
+  \item Frog monitoring in Swiss (Demo).
+  \item Diamond prices (Exercises).
+\end{enumerate}
+
+\begin{figure}
+\includegraphics[width=.2\textwidth]{fig/blmeco.jpg}
+\includegraphics[width=.2\textwidth]{fig/ggplot2.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{frogs abundance}
+<<message=FALSE>>=
+library(blmeco)
+data(frogs)
+head(frogs)
+@
+
+<<>>=
+frogs$fish <- factor(frogs$fish)
+frogs$vegetation <- factor(frogs$vegetation)
+@
+
+
+Q: What influences frog abundance?
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{diamonds dataset}
+
+<<message=FALSE>>=
+library(ggplot2)
+data(diamonds)
+head(diamonds)
+?diamonds
+@
+
+Q: What determines the price?
+\end{frame}
+
+
+\plain{ggplot2}
+\begin{frame}[fragile]
+\frametitle{What is ggplot2?}
+\begin{itemize}
+  \item A graphic system for R
+  \item gg = \textbf{G}rammar of \textbf{G}raphics
+  \item Grammar: Components that define a sentence
+  \item ggplot defines a grammar to create plots
+  \item Consistent, intuitive, easy to learn
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Why ggplot2?}
+  <<out.width='0.6\\textwidth', warning = FALSE>>=
+cols <- c('orange', 'steelblue')
+plot(count1 ~ waterarea, data = frogs, type = 'n', log = 'x')
+with(frogs, points(waterarea, count1, col = cols[fish], pch = 16))
+legend('topleft', legend = c('fish 0', 'fish 1'), pch = 16, 
+       col = cols, 
+       cex = 0.8)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Why ggplot2?}
+<<out.width='0.65\\textwidth', warning = FALSE>>=
+ggplot(frogs) +
+  geom_point(aes(x = waterarea, y = count1, col = fish)) +
+  scale_x_log10()
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Why ggplot2?}
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+  \textbf{base graphics}\\
+  \begin{itemize} 
+  \item more work
+  \item legends, colors?
+  \item ugly defaults
+  \item multipanel plots?
+  \item can do anything
+  \end{itemize}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+  \textbf{ggplot2}\\
+  \begin{itemize} 
+  \item quick-and-dirty and complex
+  \item Automatic legends, colors!
+  \item nice defaults
+  \item easy multipanel plots
+  \item restrictions (e.g. 2nd y-axis)
+  \end{itemize}
+  \end{column}
+\end{columns}
+
+\vspace{1em}
+\pause
+\begin{alertblock}{Tip 1:}
+If a plot is too much work to draw with ggplot2, reconsider if it's a good representation of your data.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Terminology}
+<<eval = FALSE>>=
+ggplot(frogs) +
+  geom_point(aes(x = waterarea, y = count1, col = fish)) +
+  scale_x_log10()
+@
+\begin{description}
+  \item[ggplot()] The main function. Can specify the dataset and variables for \textbf{all geoms} here.
+    \item[geom] A geometric object: \texttt{geom\_point, geom\_line, geom\_text, geom\_violin}
+    \item[aes] aesthetics: shape, transparency (alpha), color, fill, linetype.
+    \item[scale] How is the data displayed (log, continuous, discrete, date)
+\end{description}
+\pause
+\vspace{1em}
+\begin{alertblock}{Tip 2:}
+Never use \texttt{qplot()} (=quick plot)! - You won't learn the grammar...
+\end{alertblock}
+\end{frame}
+
+
+\plain{Univariate Data}
+\begin{frame}[fragile]
+\frametitle{Histogram}
+<<out.width='0.5\\textwidth', warning = FALSE>>=
+ggplot(frogs) +         # use the frogs dataset
+  geom_histogram(       # display a histogramm
+    aes(x = elevation)  # take the variable 'elevation' from the dataset
+    )
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Density + rug}
+We can add multiple geoms of the same variable to the plot
+<<out.width='0.5\\textwidth', warning = FALSE>>=
+ggplot(frogs, aes(x = elevation)) +     # plot the 'elevation' from the frogs data
+  geom_density() +                      # display a density
+  geom_rug()                            # display a rug
+@
+\end{frame}
+
+
+
+
+\plain{Exercise 1: \\ Plot a histogramm of diamond prices at different binwidths (50, 500, 5000). \\ How does this affect the plot?}
+\begin{frame}[fragile]
+\frametitle{Histogram}
+<<fig.width=10, fig.height=7, out.width='.75\\linewidth', warning = FALSE, echo = FALSE, message=FALSE>>=
+require(gridExtra)
+p0 <- ggplot(diamonds) +
+  geom_histogram(aes(x = price), binwidth = 5000) +
+  ggtitle("bw = 5000")
+p1 <- ggplot(diamonds) +
+  geom_histogram(aes(x = price), binwidth = 500) +
+  ggtitle("bw = 500")
+p2 <- ggplot(diamonds) +
+  geom_histogram(aes(x = price), binwidth = 50) +
+  ggtitle("bw = 50")
+grid.arrange(p0, p1, p2, nrow = 1)
+@
+\end{frame}
+
+
+
+\plain{Bivariate data}
+\begin{frame}[fragile]
+\frametitle{Scatterplot (=Cont. \times Cont.)}
+The most basic plot.
+<<fig.width=7, out.width='.75\\linewidth'>>=
+ggplot(frogs) +
+  geom_point(aes(x = count1, y = count2))
+@
+
+\end{frame}
+
+
+\end{document}

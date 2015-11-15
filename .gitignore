@@ -5,3 +5,13 @@
 
 *.html
 AufLand.Rproj
+
+# LaTeX
+*pres-concordance.tex
+*.log
+*.nav
+*.snm
+*.synctex.gz
+*.tex
+*.toc
+*.vrb

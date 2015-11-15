@@ -9,9 +9,10 @@ This is the GitHub repository for the R workshop held at the Young Academics Con
 
 
 
-## Instructor
+## Instructors
 
 * [Eduard Szöcs](edild.github.io)
+* Gunnar Oehmichen
 
 
 ## Preliminaries
@@ -28,7 +29,7 @@ Packages extend the basic functionality of R, add functions or datasets.
 For this course we need a few extra packages.  Please install the following packages - simply paste and run this command in your R prompt :
 
 ```{R}
-install.packages(c("vegan"), 
+install.packages(c("ggplot2", "reshape2", "plyr", "blmeco"), 
                  dependencies = TRUE)
 ```
 
@@ -39,10 +40,10 @@ install.packages(c("vegan"),
 2. Unzip the file - The unzipped folder contains all files and folders of this on-line repository.
 
 
-## Structure of the Course
+## Structure of the Course / Repo
 
-Each part has its own folder, with slides, data, code and other materials.
-Each lecture is structured in: **Intro** - **Demo** - **Exercise**.
+Each part has its own folder with slides & code.
+Data is in the `~\data` folder.
 
 
 ## Feedback

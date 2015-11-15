@@ -1,0 +1,78 @@
+% Created by tikzDevice version 0.8.1 on 2015-11-15 22:16:03
+% !TEX encoding = UTF-8 Unicode
+\documentclass[9pt, compress]{beamer}
+\nonstopmode
+
+\usepackage{tikz}
+
+\usepackage[active,tightpage,psfixbb]{preview}
+
+\PreviewEnvironment{pgfpicture}
+
+\setlength\PreviewBorder{0pt}
+
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+\usetheme[progressbar=frametitle,
+numbering=fraction,
+everytitleformat=regular]{m}
+
+\usepackage{color}
+\usepackage{adjustbox}
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+
+\hypersetup{bookmarksopen=true,bookmarksopenlevel=4}
+\setcounter{tocdepth}{4}
+
+\definecolor{mygreen}{rgb}{0.07, 0.53, 0.03}
+\definecolor{myorange}{rgb}{1.0, 0.31, 0.0}
+\definecolor{darkred}{rgb}{0.55, 0.0, 0.0}
+     
+
+\title{R Course, \\ AufLand Conference}
+\date{26. November 2015}
+\author{Eduard Szöcs}
+\institute{Institute for Environmental Sciences - University of Koblenz-Landau \\[1em] \includegraphics[width=2.5cm]{fig/Institut.png}}
+
+
+
+%%% -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{tikzpicture}[x=1pt,y=1pt]
+\definecolor{fillColor}{RGB}{255,255,255}
+\path[use as bounding box,fill=fillColor,fill opacity=0.00] (0,0) rectangle (505.89,505.89);
+\begin{scope}
+\path[clip] (  0.00,  0.00) rectangle (505.89,505.89);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 96.38, 55.08) -- (456.69, 55.08);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 96.38, 55.08) -- ( 96.38, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (123.50, 55.08) -- (123.50, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (186.46, 55.08) -- (186.46, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (213.57, 55.08) -- (213.57, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (276.54, 55.08) -- (276.54, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (303.65, 55.08) -- (303.65, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (366.61, 55.08) -- (366.61, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (393.73, 55.08) -- (393.73, 49.68);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (456.69, 55.08) -- (456.69, 49.68);
+\end{scope}
+\end{tikzpicture}
+
+\end{document}
