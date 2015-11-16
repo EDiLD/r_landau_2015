@@ -30,7 +30,8 @@ everytitleformat=regular]{m}
 require(knitr)
 knit_theme$set("edit-kwrite")
 opts_chunk$set(size="footnotesize",
-               fig.align='center')
+               fig.align='center', 
+               cache=TRUE)
 @
 %%% -------------------------------------------------------------------------------------------
 \maketitle
@@ -136,6 +137,8 @@ Q: What determines the price?
 \end{frame}
 
 
+
+%%% -------------------------------------------------------------------------------------------
 \plain{ggplot2}
 \begin{frame}[fragile]
 \frametitle{What is ggplot2?}
@@ -146,8 +149,11 @@ Q: What determines the price?
   \item ggplot defines a grammar to create plots
   \item Consistent, intuitive, easy to learn
 \end{itemize}
+\end{frame}
 
-
+\begin{frame}[fragile]
+\frametitle{Why ggplot2?}
+\includegraphics[width = .8\textwidth]{fig/ggplot_ex.pdf}
 \end{frame}
 
 
@@ -210,14 +216,16 @@ If a plot is too much work to draw with ggplot2, reconsider if it's a good repre
 \frametitle{Terminology}
 <<eval = FALSE>>=
 ggplot(frogs) +
-  geom_point(aes(x = waterarea, y = count1, col = fish)) +
+  geom_point(
+    aes(x = waterarea, y = count1, col = fish)) +
   scale_x_log10()
 @
 \begin{description}
-  \item[ggplot()] The main function. Can specify the dataset and variables for \textbf{all geoms} here.
+  \item[ggplot()] The main function. Can specify the data set and variables \textbf{globally}.
     \item[geom] A geometric object: \texttt{geom\_point, geom\_line, geom\_text, geom\_violin}
-    \item[aes] aesthetics: shape, transparency (alpha), color, fill, linetype.
-    \item[scale] How is the data displayed (log, continuous, discrete, date)
+    \item[aes] aesthetics: maps a variable to the properties of a geom: shape, color, fill, linetype, transparency (alpha)
+    \item[scale] How are data mapped visually (log, continuous, discrete, date, 
+    colors, sizes)
 \end{description}
 \pause
 \vspace{1em}
@@ -229,7 +237,7 @@ Never use \texttt{qplot()} (=quick plot)! - You won't learn the grammar...
 
 \plain{Univariate Data}
 \begin{frame}[fragile]
-\frametitle{Histogram}
+\frametitle{geom: Histogram}
 <<out.width='0.5\\textwidth', warning = FALSE>>=
 ggplot(frogs) +         # use the frogs dataset
   geom_histogram(       # display a histogramm
@@ -240,7 +248,7 @@ ggplot(frogs) +         # use the frogs dataset
 
 
 \begin{frame}[fragile]
-\frametitle{Density + rug}
+\frametitle{geom: Density + rug}
 We can add multiple geoms of the same variable to the plot
 <<out.width='0.5\\textwidth', warning = FALSE>>=
 ggplot(frogs, aes(x = elevation)) +     # plot the 'elevation' from the frogs data
@@ -271,17 +279,88 @@ grid.arrange(p0, p1, p2, nrow = 1)
 \end{frame}
 
 
-
+%%% -------------------------------------------------------------------------------------------
 \plain{Bivariate data}
+
 \begin{frame}[fragile]
-\frametitle{Scatterplot (=Cont. \times Cont.)}
+\frametitle{geom: Point (=Cont. x Cont.)}
 The most basic plot.
-<<fig.width=7, out.width='.75\\linewidth'>>=
+<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
 ggplot(frogs) +
   geom_point(aes(x = count1, y = count2))
 @
-
 \end{frame}
 
+
+\begin{frame}[fragile]
+\frametitle{aesthetics: Add color.}
+Differentiate between fish and no-fish:
+<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs) +
+  geom_point(aes(x = count1, y = count2, col = fish))
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{aesthetics: colors + shape}
+Can also differentiate by shape:
+<<fig.width=7, fig.height = 7, out.width='.5\\linewidth'>>=
+ggplot(frogs) +
+  geom_point(aes(x = count1, y = count2, col = fish, shape = fish))
+@
+
+\pause
+\begin{alertblock}{Tip 3:}
+Do not use redundant aesthetics.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{aesthetics: transparency}
+<<fig.width=7, fig.height = 7, out.width='.5\\linewidth'>>=
+ggplot(frogs) +
+  geom_point(aes(x = count1, y = count2), alpha = 0.4)
+@
+Q: alpha is not within aes(), why?
+
+
+\pause
+\begin{alertblock}{Tip 4:}
+Transparency is very powerful for lots of data!
+\end{alertblock}
+\end{frame}
+
+
+\plain{Exercise 2: \\
+Create this plot:
+<<fig.width=8, fig.height = 7, out.width='.7\\linewidth', echo = FALSE>>=
+ggplot(diamonds, aes(x = carat, y = price, col = color)) +
+geom_point(alpha = 0.2)
+@
+}
+
+\begin{frame}[fragile]
+\frametitle{geom: boxplot (Discrete x Continuous)}
+
+<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs) +
+  geom_boxplot(aes(x = fish, y = count1))
+@
+
+Highly-skewed distribution - not much information visibile
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{scales: log scale}
+<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs) +
+  geom_boxplot(aes(x = fish, y = count1 + 1)) +
+  scale_y_log10()
+@
+
+scale\_\color{mygreen}{aesthetic}\_\color{myorange}{type}
+
+\end{frame}
 
 \end{document}

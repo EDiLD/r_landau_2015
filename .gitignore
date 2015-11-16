@@ -6,6 +6,8 @@
 *.html
 AufLand.Rproj
 
+cache
+
 # LaTeX
 *pres-concordance.tex
 *.log
