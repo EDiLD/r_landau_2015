@@ -17,3 +17,5 @@ cache
 *.tex
 *.toc
 *.vrb
+*.aux
+*.ods#
