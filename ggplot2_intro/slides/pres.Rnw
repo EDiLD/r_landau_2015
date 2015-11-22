@@ -15,6 +15,12 @@ everytitleformat=regular]{m}
 \definecolor{mygreen}{rgb}{0.07, 0.53, 0.03}
 \definecolor{myorange}{rgb}{1.0, 0.31, 0.0}
 \definecolor{darkred}{rgb}{0.55, 0.0, 0.0}
+
+
+\definecolor{geom}{rgb}{1.0, 0.31, 0.0}
+\definecolor{aes}{rgb}{0.07, 0.53, 0.03}
+\definecolor{scale}{rgb}{0.13, 0.67,0.8}
+\definecolor{theme}{rgb}{0.55, 0.0, 0.0}
      
 
 \title{R Course, \\ AufLand Conference}
@@ -24,7 +30,7 @@ everytitleformat=regular]{m}
 
 
 
-%%% -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%%% ----------------------------------------------------------------------------
 \begin{document}
 <<setup, echo=FALSE>>=
 require(knitr)
@@ -33,14 +39,12 @@ opts_chunk$set(size="footnotesize",
                fig.align='center', 
                cache=TRUE)
 @
-%%% -------------------------------------------------------------------------------------------
+%%% ----------------------------------------------------------------------------
 \maketitle
 
 
-%%% -------------------------------------------------------------------------------------------
+%%% ----------------------------------------------------------------------------
 \section{Intro}
-
-
 \begin{frame}
 \frametitle{Short Intro: Eduard Szöcs}
 \begin{itemize}
@@ -64,7 +68,20 @@ opts_chunk$set(size="footnotesize",
 
 \begin{frame}
 \frametitle{Short Intro: Gunnar Oehmichen}
-
+\begin{itemize}
+  \item Diploma in Environmental Sciences
+  \item Diploma Thesis @Quantitative Landscape Ecology
+  \item Topics: Ecology, Renewable Energies and Conservation
+  \item Graduate Assistant @Environmental Sciences Lab: Renewable Energies
+  \begin{itemize}
+    \item Automated display of Spatial Information on Renewable Energies in a WebGIS
+  \end{itemize}
+  \item R-Programming:
+    \begin{itemize}
+      \item R-User for 5 Years
+      \item Assistant in several Summerschools (@UFZ-Leipzig, @Landau)
+    \end{itemize}
+\end{itemize}
 \end{frame}
 
 
@@ -72,8 +89,13 @@ opts_chunk$set(size="footnotesize",
 \frametitle{Course Outline}
 \begin{itemize}
   \item Short intro \& course organisation, Software preparation
-  \item An introduction to ggplot2
-  \item Visualization \& Exploration of models in R
+  \item An introduction to ggplot2.
+  \begin{itemize}
+    \item Basic ggplot2 usage
+    \item Customization of your plots
+    \item Free time for specific Q.
+  \end{itemize}
+  \item After 4 hours of ggplot2 you should be an expert ;)
 \end{itemize}
 
 Course material: \url{https://github.com/EDiLD/r_landau_2015}
@@ -84,8 +106,9 @@ Course material: \url{https://github.com/EDiLD/r_landau_2015}
 \begin{frame}
 \frametitle{Preliminaries}
 \begin{itemize}
-  \item Download the course repository
+  \item Download the course repository.
   \item No formal R knowledge required to follow.
+  \item (Install RStudio and packages needed).
   \item Just open the `.R` files in RStudio and execute the script line by line: `CTRL + ENTER`
 \end{itemize}
 \end{frame}
@@ -95,7 +118,7 @@ Course material: \url{https://github.com/EDiLD/r_landau_2015}
 \frametitle{Datasets}
 We will use 2 data sets in this course:
 \begin{enumerate}
-  \item Frog monitoring in Swiss (Demo).
+  \item Frog monitoring in Swiss (Slides).
   \item Diamond prices (Exercises).
 \end{enumerate}
 
@@ -103,6 +126,11 @@ We will use 2 data sets in this course:
 \includegraphics[width=.2\textwidth]{fig/blmeco.jpg}
 \includegraphics[width=.2\textwidth]{fig/ggplot2.jpg}
 \end{figure}
+
+\begin{alertblock}{Tip:}
+Don't buy the old ggplot2 book - a new one is coming soon...
+\end{alertblock}
+
 \end{frame}
 
 \begin{frame}[fragile]
@@ -118,8 +146,11 @@ frogs$fish <- factor(frogs$fish)
 frogs$vegetation <- factor(frogs$vegetation)
 @
 
+\begin{alertblock}{Questions:}
+What influences frog abundance?
+Can we predict frog abundance (ala SDM)?
+\end{alertblock}
 
-Q: What influences frog abundance?
 \end{frame}
 
 
@@ -133,32 +164,51 @@ head(diamonds)
 ?diamonds
 @
 
-Q: What determines the price?
+\begin{alertblock}{Questions:}
+What factors are crucial for the diamond prices?
+\end{alertblock}
 \end{frame}
 
 
 
-%%% -------------------------------------------------------------------------------------------
+%%% ----------------------------------------------------------------------------
+%%% ggplot2
 \plain{ggplot2}
 \begin{frame}[fragile]
 \frametitle{What is ggplot2?}
-\begin{itemize}
+% \begin{columns}
+%   \begin{column}{0.5\textwidth}
+% 
+%   \end{column}
+%   \begin{column}{0.5\textwidth}
+% 
+%   \end{column}
+% \end{columns}
+
+\begin{columns}
+  \begin{column}{0.7\textwidth}
+  \begin{itemize}
   \item A graphic system for R
-  \item gg = \textbf{G}rammar of \textbf{G}raphics
-  \item Grammar: Components that define a sentence
-  \item ggplot defines a grammar to create plots
+  \item gg = \textcolor{mLightBrown}{\textbf{G}}rammar of \textcolor{mLightBrown}{\textbf{G}}raphics (Wilkinson 2005)
+  \item \emph{Grammar}: A set of components that define a sentence 
+  \item \textcolor{mLightBrown}{gg}plot defines a grammar to create plots
   \item Consistent, intuitive, easy to learn
 \end{itemize}
+  \end{column}
+  \begin{column}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{fig/wilk.jpg}
+  \end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Why ggplot2?}
-\includegraphics[width = .8\textwidth]{fig/ggplot_ex.pdf}
+\includegraphics[width = \textwidth]{fig/ggplot_ex.pdf}
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{Why ggplot2?}
+\frametitle{With base R}
   <<out.width='0.6\\textwidth', warning = FALSE>>=
 cols <- c('orange', 'steelblue')
 plot(count1 ~ waterarea, data = frogs, type = 'n', log = 'x')
@@ -171,7 +221,7 @@ legend('topleft', legend = c('fish 0', 'fish 1'), pch = 16,
 
 
 \begin{frame}[fragile]
-\frametitle{Why ggplot2?}
+\frametitle{With ggplot2}
 <<out.width='0.65\\textwidth', warning = FALSE>>=
 ggplot(frogs) +
   geom_point(aes(x = waterarea, y = count1, col = fish)) +
@@ -184,31 +234,33 @@ ggplot(frogs) +
 \frametitle{Why ggplot2?}
 \begin{columns}
   \begin{column}{0.5\textwidth}
-  \textbf{base graphics}\\
-  \begin{itemize} 
-  \item more work
-  \item legends, colors?
-  \item ugly defaults
-  \item multipanel plots?
-  \item can do anything
-  \end{itemize}
+    \textcolor{mLightBrown}{\textbf{base graphics}}\\
+    \begin{itemize} 
+    \item more work / code
+    \item legends, colors?
+    \item defaults ok
+    \item multipanel plots?
+    \item can do anything
+    \item have to know the \emph{tricks}
+    \end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
-  \textbf{ggplot2}\\
-  \begin{itemize} 
-  \item quick-and-dirty and complex
-  \item Automatic legends, colors!
-  \item nice defaults
-  \item easy multipanel plots
-  \item restrictions (e.g. 2nd y-axis)
-  \end{itemize}
+    \textcolor{mLightBrown}{\textbf{ggplot2}}\\
+    \begin{itemize} 
+    \item quick-and-dirty and complex
+    \item Automatic legends, colors!
+    \item nice defaults
+    \item easy multipanel plots
+    \item restrictions (e.g. 2nd y-axis)
+    \item intuitive syntax
+    \end{itemize}
   \end{column}
 \end{columns}
 
 \vspace{1em}
 \pause
-\begin{alertblock}{Tip 1:}
-If a plot is too much work to draw with ggplot2, reconsider if it's a good representation of your data.
+\begin{alertblock}{Tip:}
+If a plot is too complicated to draw with ggplot2, reconsider if it's a good representation of your data!
 \end{alertblock}
 \end{frame}
 
@@ -218,37 +270,39 @@ If a plot is too much work to draw with ggplot2, reconsider if it's a good repre
 ggplot(frogs) +
   geom_point(
     aes(x = waterarea, y = count1, col = fish)) +
-  scale_x_log10()
+  scale_x_log10() +
+  theme_bw()
 @
 \begin{description}
   \item[ggplot()] The main function. Can specify the data set and variables \textbf{globally}.
-    \item[geom] A geometric object: \texttt{geom\_point, geom\_line, geom\_text, geom\_violin}
-    \item[aes] aesthetics: maps a variable to the properties of a geom: shape, color, fill, linetype, transparency (alpha)
-    \item[scale] How are data mapped visually (log, continuous, discrete, date, 
-    colors, sizes)
+    \item[\textcolor{geom}{geom}] A geometric object: \texttt{geom\_point, geom\_line, geom\_text, geom\_violin}, \dots
+    \item[\textcolor{aes}{aes}] aesthetics: maps a variable to the properties of a geom: \texttt{shape}, \texttt{color}, \texttt{fill}, \texttt{linetype}, transparency (\texttt{alpha}), \dots
+    \item[\textcolor{scale}{scale}] How are data mapped visually (\texttt{log}, \texttt{date}, 
+    \texttt{colors}, \texttt{sizes}, \dots)
+    \item[\textcolor{theme}{theme}] The general plot apperance (\texttt{background}, \texttt{axes}, \texttt{labels}, \dots)
 \end{description}
 \pause
 \vspace{1em}
-\begin{alertblock}{Tip 2:}
+\begin{alertblock}{Tip:}
 Never use \texttt{qplot()} (=quick plot)! - You won't learn the grammar...
 \end{alertblock}
 \end{frame}
 
 
 \plain{Univariate Data}
+
 \begin{frame}[fragile]
-\frametitle{geom: Histogram}
+\frametitle{\textcolor{geom}{geom:} histogram}
 <<out.width='0.5\\textwidth', warning = FALSE>>=
-ggplot(frogs) +         # use the frogs dataset
-  geom_histogram(       # display a histogramm
-    aes(x = elevation)  # take the variable 'elevation' from the dataset
-    )
+ggplot(frogs,                   # use the frogs
+           aes(x = elevation))+   # take the variable 'elevation' from the dataset) 
+  geom_histogram()              # display a histogramm
 @
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{geom: Density + rug}
+\frametitle{\textcolor{geom}{geom:} density + rug}
 We can add multiple geoms of the same variable to the plot
 <<out.width='0.5\\textwidth', warning = FALSE>>=
 ggplot(frogs, aes(x = elevation)) +     # plot the 'elevation' from the frogs data
@@ -260,9 +314,9 @@ ggplot(frogs, aes(x = elevation)) +     # plot the 'elevation' from the frogs da
 
 
 
-\plain{Exercise 1: \\ Plot a histogramm of diamond prices at different binwidths (50, 500, 5000). \\ How does this affect the plot?}
+\plain{Exercise 1: \\ Plot a histogramm of diamond prices at different binwidths (50, 500, 5000). \\ How does this affect the preception of the data?}
 \begin{frame}[fragile]
-\frametitle{Histogram}
+\frametitle{Exercise}
 <<fig.width=10, fig.height=7, out.width='.75\\linewidth', warning = FALSE, echo = FALSE, message=FALSE>>=
 require(gridExtra)
 p0 <- ggplot(diamonds) +
@@ -280,54 +334,71 @@ grid.arrange(p0, p1, p2, nrow = 1)
 
 
 %%% -------------------------------------------------------------------------------------------
-\plain{Bivariate data}
+\plain{Bivariate data \\ (cont. x cont.)}
 
 \begin{frame}[fragile]
-\frametitle{geom: Point (=Cont. x Cont.)}
-The most basic plot.
-<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
-ggplot(frogs) +
-  geom_point(aes(x = count1, y = count2))
+\frametitle{\textcolor{geom}{geom:} point (=cont. x cont.)}
+The mother of all plots.
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = count1, y = count2)) +
+  geom_point()
 @
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{aesthetics: Add color.}
+\frametitle{\textcolor{aes}{aesthetic:} color (discrete)}
 Differentiate between fish and no-fish:
-<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
-ggplot(frogs) +
-  geom_point(aes(x = count1, y = count2, col = fish))
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = count1, y = count2, col = fish)) +
+  geom_point()
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\textcolor{aes}{aesthetic:} color (continuous)}
+Continuous color scale:
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = count1, y = count2, col = sqrt(waterarea))) +
+  geom_point()
 @
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{aesthetics: colors + shape}
+\frametitle{\textcolor{aes}{aesthetics}: shape}
 Can also differentiate by shape:
-<<fig.width=7, fig.height = 7, out.width='.5\\linewidth'>>=
-ggplot(frogs) +
-  geom_point(aes(x = count1, y = count2, col = fish, shape = fish))
+<<fig.width=8, fig.height = 7, out.width='.5\\linewidth'>>=
+ggplot(frogs, aes(x = count1, y = count2, shape = fish)) +
+  geom_point()
 @
+\end{frame}
 
+\begin{frame}[fragile]
+\frametitle{\textcolor{aes}{aesthetics}: shape + color}
+Can also differentiate by shape:
+<<fig.width=8, fig.height = 7, out.width='.5\\linewidth'>>=
+ggplot(frogs, aes(x = count1, y = count2, shape = fish, col = fish)) +
+  geom_point()
+@
 \pause
-\begin{alertblock}{Tip 3:}
+\begin{alertblock}{Tip:}
 Do not use redundant aesthetics.
 \end{alertblock}
 \end{frame}
 
+
 \begin{frame}[fragile]
-\frametitle{aesthetics: transparency}
-<<fig.width=7, fig.height = 7, out.width='.5\\linewidth'>>=
+\frametitle{\textcolor{aes}{aesthetics:} alpha (=transparency)}
+<<fig.width=8, fig.height = 7, out.width='.4\\linewidth'>>=
 ggplot(frogs) +
-  geom_point(aes(x = count1, y = count2), alpha = 0.4)
+  geom_point(aes(x = count1, y = count2, col = fish), alpha = 0.4)
 @
 Q: alpha is not within aes(), why?
 
-
 \pause
-\begin{alertblock}{Tip 4:}
-Transparency is very powerful for lots of data!
+\begin{alertblock}{A:}
+Within \texttt{aes()} the \textcolor{aes}{aesthetic} changes with the specified variable (e.g. \texttt{col = fish}). Outside of \texttt{aes} we set it to a specific value.
 \end{alertblock}
 \end{frame}
 
@@ -336,31 +407,271 @@ Transparency is very powerful for lots of data!
 Create this plot:
 <<fig.width=8, fig.height = 7, out.width='.7\\linewidth', echo = FALSE>>=
 ggplot(diamonds, aes(x = carat, y = price, col = color)) +
-geom_point(alpha = 0.2)
+  geom_point(alpha = 0.2)
 @
 }
 
-\begin{frame}[fragile]
-\frametitle{geom: boxplot (Discrete x Continuous)}
 
-<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
-ggplot(frogs) +
-  geom_boxplot(aes(x = fish, y = count1))
+%%% -------------------------------------------------------------------------------------------
+\plain{Bivariate data \\ (discrete x continuous)}
+\begin{frame}[fragile]
+\frametitle{\textcolor{geom}{geom:} boxplot}
+\begin{itemize}
+\item More then 45 years (Tukey 1970)
+\item For discrete scales (here fish)
+\end{itemize}
+
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = fish, y = elevation)) +
+  geom_boxplot()
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{\textcolor{aes}{aesthtic:} color (discrete)}
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = fish, y = elevation, col = vegetation)) +
+  geom_boxplot()
 @
 
-Highly-skewed distribution - not much information visibile
+\begin{alertblock}{Tip:}
+Nice for factorial designs (e.g. easily spot interactions).
+\end{alertblock}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{\textcolor{aes}{aesthtic:} fill (discrete)}
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = fish, y = elevation, fill = vegetation)) +
+  geom_boxplot()
+@
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{scales: log scale}
-<<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
-ggplot(frogs) +
-  geom_boxplot(aes(x = fish, y = count1 + 1)) +
-  scale_y_log10()
+\frametitle{\textcolor{geom}{geom:} violin}
+The Violin plot is a powerful alterative/addition:
+<<fig.width=8, fig.height = 7, out.width='.5\\linewidth'>>=
+ggplot(frogs, aes(x = fish, y = elevation)) +
+  geom_violin() +
+  geom_boxplot(width = 0.3)
 @
 
-scale\_\color{mygreen}{aesthetic}\_\color{myorange}{type}
-
+\begin{alertblock}{Tip:}
+The order of geoms is important! Uppermost layer is the last \textcolor{geom}{geom} specified.
+\end{alertblock}
 \end{frame}
+
+
+
+\plain{Exercise 3: \\
+Create this plot:
+<<fig.width=8, fig.height = 7, out.width='.7\\linewidth', echo = FALSE>>=
+ggplot(diamonds, aes(x = cut, y = price)) +
+  geom_violin() +
+  geom_boxplot(width = 0.15, fill = 'grey90')
+@
+}
+
+
+%%% ----------------------------------------------------------------------------
+\plain{Multivariate data \\ (Facets)}
+
+\begin{frame}[fragile]
+\frametitle{Subgroupgs}
+The different relationships between \emph{fish} and \emph{no fish} are hard to spot:
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = elevation, y = count1, col = fish)) +
+  geom_point()
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{facets: Split the plots by groups}
+<<fig.width=12, fig.height = 7, out.width='.8\\linewidth'>>=
+ggplot(frogs, aes(x = elevation, y = count1, col = fish)) +
+  geom_point() +
+  facet_wrap(~fish)
+@
+
+\pause
+\begin{alertblock}{Tip:}
+The color here is redundant!
+\end{alertblock}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{facets: Split the plots by groups}
+\begin{itemize}
+\item \texttt{facet\_wrap()} wraps into a rectagular layout
+\item \texttt{facet\_grid(rows \textasciitilde cols)} wraps into rows and columns
+\end{itemize}
+<<fig.width=12, fig.height = 7, out.width='.8\\linewidth'>>=
+ggplot(frogs, aes(x = elevation, y = count1, col = fish)) +
+  geom_point() +
+  facet_grid(vegetation~fish)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{facets: Split the plots by groups}
+\begin{itemize}
+\item add text to strip to identify variables with \texttt{labeller}
+\end{itemize}
+<<fig.width=12, fig.height = 7, out.width='.8\\linewidth'>>=
+ggplot(frogs, aes(x = elevation, y = count1, col = fish)) +
+  geom_point() +
+  facet_grid(vegetation~fish, labeller = label_both)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{facets: Split the plots by groups}
+\begin{itemize}
+\item Both rows have the same scale.
+\item use \texttt{scales = "free" or "frex\_x", "free\_y"} to adjust
+\end{itemize}
+<<fig.width=12, fig.height = 7, out.width='.8\\linewidth'>>=
+ggplot(frogs, aes(x = elevation, y = count1, col = fish)) +
+  geom_point() +
+  facet_grid(vegetation~fish, 
+             scales = 'free_y')
+@
+\end{frame}
+
+
+\plain{Exercise 4: \\
+Create this plot:
+<<fig.width=8, fig.height = 7, out.width='.7\\linewidth', echo = FALSE>>=
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point() +
+  facet_grid(cut ~ color, labeller = label_both)
+@
+}
+
+
+
+%%% ----------------------------------------------------------------------------
+\plain{Aggregated data \\ (Visualize errors)}
+
+\begin{frame}[fragile]
+\frametitle{Aggregate data}
+\begin{itemize}
+\item Often we want to show aggregates of our data (e.g. means and CIs)
+\end{itemize}
+
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(frogs, aes(x = fish, y = elevation)) +
+  geom_point(position = position_jitter(width = 0.2), alpha = 0.2)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Aggregate data}
+\begin{itemize}
+\item Aggregate first, then plot!
+\item A lot of possibilities to aggregate (\texttt{plyr}, \texttt{dplyr}, \texttt{data.table}, \texttt{sqldf},
+\texttt{ave()}, \texttt{doBy}, \dots)
+\item I use \texttt{plyr} solutions here.
+\end{itemize}
+
+<<>>=
+require(plyr)
+mean_ci <- ddply(frogs, .(fish), summarise, 
+      mean = mean(elevation),
+      err = qnorm(0.975) * sd(elevation) / sqrt(length(elevation)))
+mean_ci
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{\textcolor{geom}{geom:} bar}
+<<fig.width=8, fig.height = 7, out.width='.4\\linewidth'>>=
+ggplot(mean_ci, aes(x = fish, y = mean)) +
+  geom_bar(stat = 'identity')
+@
+\begin{itemize}
+  \item We need to set \texttt{stat = 'identity'} so that the heights of the bars represent the mean.
+  \item Otherwise \texttt{geom\_bar} tries to transform the data (height = number of cases per group)
+\end{itemize}
+\pause
+  \begin{alertblock}{Tip:}
+  Don't use bars to display means. Bad data-to-ink ratio (Tufte)!
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{\textcolor{geom}{geom:} errorbars}
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot(data = mean_ci, aes(x = fish, y = mean)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - err, ymax = mean + err), width = 0.2)
+@
+
+\begin{itemize}
+\item points are enough to represent the means
+\item \texttt{width = 0.2} fo smaller whisker (default = 1)
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Combining different datasets into on plot}
+<<fig.width=8, fig.height = 7, out.width='.6\\linewidth'>>=
+ggplot() +
+  geom_point(data = mean_ci, aes(x = fish, y = mean)) +
+  geom_errorbar(data = mean_ci, aes(x = fish, y = mean, 
+                                    ymin = mean - err, ymax = mean + err), 
+                width = 0.2, size = 1) +
+  geom_point(data = frogs, aes(x = fish, y = elevation), 
+             position = position_jitter(width = 0.2), 
+             alpha = 0.2) 
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Combining different datasets into on plot}
+\begin{itemize}
+  \item Because we have multiple datasets, we cannot pass them globally in \texttt{ggplot()}
+  \item specify data and aesthetics for each layer / geom
+\end{itemize}
+\pause
+  \begin{alertblock}{Tip:}
+  Plotting the raw data is a good idea (spot errors, make data available, etc...)
+  \end{alertblock}
+\end{frame}
+
+
+\plain{maps}
+
+
+\plain{Customization and Prettification}
+
+%' \begin{frame}[fragile]
+%' \frametitle{\textcolor{scale}{scale:} log y axis}
+%' <<fig.width=7, fig.height = 7, out.width='.6\\linewidth'>>=
+%' ggplot(frogs) +
+%'   geom_boxplot(aes(x = fish, y = count1 + 1)) +
+%'   scale_y_log10()
+%' @
+%' 
+%' \textcolor{scale}{scale}\_\textcolor{aes}{aesthetic}\_\textcolor{myorange}{type}
+%' \end{frame}
+%' 
+%' 
+%' \begin{frame}[fragile]
+%' \frametitle{\textcolor{scale}{scales}}
+%' \begin{itemize}
+%' \item General form: \textcolor{scale}{scale}\_\textcolor{aes}{aesthetic}\_type
+%' \item Type specifies the type of scale (e.g. \texttt{log10, grey, etc.})
+%' \end{itemize}
+%' \end{frame}
 
 \end{document}

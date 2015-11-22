@@ -29,7 +29,7 @@ Packages extend the basic functionality of R, add functions or datasets.
 For this course we need a few extra packages.  Please install the following packages - simply paste and run this command in your R prompt :
 
 ```{R}
-install.packages(c("ggplot2", "reshape2", "plyr", "blmeco"), 
+install.packages(c("ggplot2", "reshape2", "plyr", "blmeco", "ggmap"), 
                  dependencies = TRUE)
 ```
 
