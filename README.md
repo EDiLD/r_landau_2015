@@ -29,7 +29,7 @@ Packages extend the basic functionality of R, add functions or datasets.
 For this course we need a few extra packages.  Please install the following packages - simply paste and run this command in your R prompt :
 
 ```{R}
-install.packages(c("ggplot2", "plyr", "blmeco", "ggmap"), 
+install.packages(c("ggplot2", "plyr", "blmeco", "ggmap", "ggthemes"), 
                  dependencies = TRUE)
 ```
 
@@ -42,7 +42,7 @@ install.packages(c("ggplot2", "plyr", "blmeco", "ggmap"),
 
 ## Structure of the Course / Repo
 
-Each part has its own folder with slides & code.
+Find code (to follow) and slides in the `~/ggplot2_intro` folder.
 
 
 ## Feedback

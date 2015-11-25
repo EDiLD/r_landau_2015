@@ -171,36 +171,12 @@ What factors are crucial for the diamond prices?
 %%% ----------------------------------------------------------------------------
 %%% ggplot2 basics
 \plain{ggplot2 basics}
-\begin{frame}[fragile]
-\frametitle{What is ggplot2?}
-% \begin{columns}
-%   \begin{column}{0.5\textwidth}
-% 
-%   \end{column}
-%   \begin{column}{0.5\textwidth}
-% 
-%   \end{column}
-% \end{columns}
 
-\begin{columns}
-  \begin{column}{0.7\textwidth}
-  \begin{itemize}
-  \item A graphic system for R
-  \item gg = \textcolor{mLightBrown}{\textbf{G}}rammar of \textcolor{mLightBrown}{\textbf{G}}raphics (Wilkinson 2005)
-  \item \emph{Grammar}: A set of components that define a sentence 
-  \item \textcolor{mLightBrown}{gg}plot defines a grammar to create plots
-  \item Consistent, intuitive, easy to learn
-\end{itemize}
-  \end{column}
-  \begin{column}{0.3\textwidth}
-   \includegraphics[width=\textwidth]{fig/wilk.jpg}
-  \end{column}
-\end{columns}
-\end{frame}
 \begin{frame}[fragile]
-\frametitle{Why ggplot2?}
+\frametitle{Recent plots I created with ggplot2}
 \includegraphics[width = 1.1\textwidth]{fig/ggplot_ex.pdf}
 \end{frame}
+
 
 
 \begin{frame}[fragile]
@@ -225,6 +201,7 @@ ggplot(frogs) +
   scale_x_log10()
 @
 \end{frame}
+
 
 
 \begin{frame}[fragile]
@@ -259,6 +236,36 @@ ggplot(frogs) +
 If a plot is too complicated to draw with ggplot2, reconsider if it's a good representation of your data!
 \end{alertblock}
 \end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{What is ggplot2?}
+% \begin{columns}
+%   \begin{column}{0.5\textwidth}
+% 
+%   \end{column}
+%   \begin{column}{0.5\textwidth}
+% 
+%   \end{column}
+% \end{columns}
+
+\begin{columns}
+  \begin{column}{0.7\textwidth}
+  \begin{itemize}
+  \item A graphic system for R
+  \item gg = \textcolor{mLightBrown}{\textbf{G}}rammar of \textcolor{mLightBrown}{\textbf{G}}raphics (Wilkinson 2005)
+  \item \emph{Grammar}: A set of components that define a sentence 
+  \item \textcolor{mLightBrown}{gg}plot defines a grammar to create plots
+  \item Consistent, intuitive, easy to learn
+\end{itemize}
+  \end{column}
+  \begin{column}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{fig/wilk.jpg}
+  \end{column}
+\end{columns}
+\end{frame}
+
 
 
 
@@ -583,7 +590,7 @@ ggplot(frogs, aes(x = fish, y = elevation)) +
 \item Aggregate first, then plot!
 \item A lot of possibilities to aggregate (\texttt{plyr}, \texttt{dplyr}, \texttt{data.table}, \texttt{sqldf},
 \texttt{ave()}, \texttt{doBy}, \dots)
-\item I use \texttt{plyr} solutions here.
+\item I use a \texttt{plyr} solution here.
 \end{itemize}
 <<>>=
 require(plyr)
@@ -597,7 +604,7 @@ mean_ci
 
 \begin{frame}[fragile]
 \frametitle{\textcolor{geom}{geom:} bar}
-<<out.width='.5\\linewidth'>>=
+<<out.width='.4\\linewidth'>>=
 ggplot(mean_ci, aes(x = fish, y = mean)) +
   geom_bar(stat = 'identity')
 @
@@ -674,8 +681,8 @@ ggplot() +
 \frametitle{Easy maps with ggmap}
 \begin{itemize}
   \item \texttt{ggmap} can retrieve maps from different sources (Google Maps, OpenStreetMap, StamenMaps, and CloudMade Maps).
-  \item Needs coordinates in lat/lon formant
-  \item easy, consistent and modularframework for spatial graphics 
+  \item Needs coordinates in lat/lon format
+  \item easy, consistent and modular framework for spatial graphics 
   \item Workflow: Prepare data > retrive background map > add layers
 \end{itemize}
 \end{frame}
@@ -886,6 +893,7 @@ ggplot(frogs, aes(x = fish, y = elevation, fill = fish)) +
 \begin{frame}[fragile]
 \frametitle{\textcolor{scale}{scales:} \textcolor{aes}{color (palettes)}}
 \begin{itemize}
+\item A palette is a specific order of colors
 \item Select from a predefined palette
 \item e.g. \url{http://colorbrewer2.org/}
 \end{itemize}
@@ -914,6 +922,7 @@ ggplot(frogs, aes(x = fish, y = elevation, fill = fish)) +
 \begin{frame}[fragile]
 \frametitle{\textcolor{scale}{scales:} \textcolor{aes}{color (gradients)}}
 \begin{itemize}
+\item for continuous variable use a gradient (no palette)
 \item Change the gradient for a continuous variable
 \end{itemize}
 <<>>=
@@ -953,7 +962,7 @@ ggplot(diamonds, aes(x = carat, y = price, col = color)) +
 
 
 \begin{frame}[fragile]
-\frametitle{Working with legends}
+\frametitle{Change order on x-axis}
 \begin{itemize}
 \item used \texttt{scale\_x\_discrete(limits = c("1", "0"))} to change order on x-axis
 \item how to change order in legend?
@@ -967,7 +976,7 @@ scale_x_discrete(limits = c("1", "0"))
 
 
 \begin{frame}[fragile]
-\frametitle{Working with legends: Change order}
+\frametitle{Working with legends: Change order in legend}
 \begin{itemize}
 \item use scale for \textcolor{aes}{fill} aesthetic.
 \item use \texttt{breaks = <levels>}.
@@ -994,6 +1003,19 @@ scale_fill_discrete(name = 'Fish presence', breaks = c('1', '0'))
 @
 \end{frame}
 
+
+\begin{frame}[fragile]
+\frametitle{Working with legends: Change legend labels}
+\begin{itemize}
+\item use \texttt{name = <legendtitle>}
+\end{itemize}
+<<out.width='.5\\linewidth'>>=
+ggplot(frogs, aes(x = fish, y = elevation, fill = fish)) +
+geom_boxplot() +
+scale_x_discrete(limits = c('1', '0')) +
+scale_fill_discrete(name = 'Fish presence', breaks = c('1', '0'), labels = c('with fish', 'without fish'))
+@
+\end{frame}
 
 %%% ---------------------------------------------------------------------------
 
@@ -1043,6 +1065,13 @@ ggplot(frogs, aes(x = count1, y = count2, col = fish)) +
   \item Every theme consists of several elements
   \item see \texttt{?theme} for a complete list
   \item we go through the most important elements one by one
+  \item Each element consists of 
+    \begin{itemize}
+    \item element\_text
+    \item element\_line
+    \item element\_rect
+    \item element\_blank
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -1089,7 +1118,7 @@ ggplot(td, aes(x = hjust, y = vjust)) +
 \begin{frame}[fragile]
 \frametitle{\textcolor{theme}{Themes:} axis title}
 \begin{itemize}
-  \item if we omit the .x / .y the elemt is applied to both axes
+  \item if we omit the .x / .y the element is applied to both axes
 \end{itemize}
 <<>>=
 ggplot(frogs, aes(x = count1, y = count2, col = fish)) +
@@ -1236,7 +1265,7 @@ ggplot(frogs, aes(x = count1, y = count2, col = fish)) +
 @
 \end{frame}
 
-\plain{Exercise 5: \\
+\plain{Exercise 6: \\
 Create this plot:
 <<fig.width = 10, out.width='.7\\linewidth', echo = FALSE>>=
 ggplot(diamonds, aes(x = carat, y = price, col = color)) +
@@ -1262,7 +1291,7 @@ ggplot(diamonds, aes(x = carat, y = price, col = color)) +
 \plain{Exporting your plots}
 
 \begin{frame}[fragile]
-\frametitle{Export your to a file}
+\frametitle{Export your plot to a file}
 \begin{itemize}
   \item save your plot as object
   \item use \texttt{ggsave()} to save the object
