@@ -174,7 +174,7 @@ What factors are crucial for the diamond prices?
 
 \begin{frame}[fragile]
 \frametitle{Recent plots I created with ggplot2}
-\includegraphics[width = 1.1\textwidth]{fig/ggplot_ex.pdf}
+\includegraphics[width = 1.1\textwidth]{fig/ggplot_ex.png}
 \end{frame}
 
 
