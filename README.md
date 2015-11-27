@@ -17,6 +17,8 @@ This is the GitHub repository for the R workshop held at the Young Academics Con
 
 ## Preliminaries
 
+You will need an up to date installtion of R and the needed packages.
+
 ### Install R
 
 If you don't already have set up R on your laptop, please download and install it from [here](http://cran.rstudio.com/). 
@@ -40,9 +42,11 @@ install.packages(c("ggplot2", "plyr", "blmeco", "ggmap", "ggthemes"),
 2. Unzip the file - The unzipped folder contains all files and folders of this on-line repository.
 
 
-## Structure of the Course / Repo
+## Structure of this Repositoy
 
-Find code (to follow) and slides in the `~/ggplot2_intro` folder.
+1. You can find the code to follow the course in the `/code` folder
+2. `ggplot2_intro_solutions.R` contains the script **with** solutions
+3. You can find the slides (and the LaTeX source) in the `/slides` folder
 
 
 ## Feedback
